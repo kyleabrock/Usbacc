@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Core"
+                   namespace="UsbAcc.Core.Domain">
+
+  <class name="UsbDevice">
+    <id name="Id" column="UsbDeviceId">
+      <generator class="increment"/>
+    </id>
+    <many-to-one name="Report" class="Report" column="ReportId" />
+    <property name="DeviceName" not-null="true"/>
+    <property name="DeviceType" not-null="true"/>
+    <property name="Description" not-null="true"/>
+    <property name="VendorId" not-null="true"/>
+    <property name="ProductId" not-null="true"/>
+    <property name="SerialNumber" not-null="true"/>
+    <property name="CreatedDateTime" not-null="true"/>
+    <property name="LastPlugDateTime" not-null="true"/>
+  </class>
+
+</hibernate-mapping>

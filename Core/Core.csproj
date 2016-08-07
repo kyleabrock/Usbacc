@@ -55,18 +55,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\DeviceAccount.cs" />
     <Compile Include="Domain\EntityBase.cs" />
+    <Compile Include="Domain\Report.cs" />
+    <Compile Include="Domain\UsbDevice.cs" />
+    <Compile Include="Converter\UsbDeviewReport.cs" />
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Tests\ConnectionTest.cs" />
+    <Compile Include="Tests\ExportSchemaTest.cs" />
+    <Compile Include="Tests\UsbDeviewConverterTest.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Mapper\" />
-    <Folder Include="Tests\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="hibernate.cfg.xml" />
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Mapper\DeviceAccount.hbm.xml" />
+    <EmbeddedResource Include="Mapper\DeviceAccount.xml" />
+    <EmbeddedResource Include="Mapper\UsbDevice.hbm.xml" />
+    <EmbeddedResource Include="Mapper\Report.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
