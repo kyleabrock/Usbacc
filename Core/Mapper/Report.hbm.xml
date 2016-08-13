@@ -9,9 +9,9 @@
     </id>
     <property name="ReportName" not-null="true"/>
     <property name="CreationDateTime" not-null="true"/>
-    <bag name="UsbDevices" inverse="true">
+    <bag name="UsbRecords" inverse="true">
       <key column="ReportId" />
-      <one-to-many class="UsbDevice" />
+      <one-to-many class="UsbRecord" />
     </bag>
     <property name="Comments" not-null="true"/>
   </class>

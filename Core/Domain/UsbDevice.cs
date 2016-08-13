@@ -1,11 +1,7 @@
-﻿using System;
-
-namespace UsbAcc.Core.Domain
+﻿namespace UsbAcc.Core.Domain
 {
-    public class UsbDevice : EntityBase
+    public class UsbDevice
     {
-        public virtual Report Report { get; set; }
-
         private string _deviceName = "";
         public virtual string DeviceName
         {
@@ -48,18 +44,19 @@ namespace UsbAcc.Core.Domain
             set { _serialNumber = value; }
         }
 
-        private DateTime _createdDateTime = DateTime.MinValue;
-        public virtual DateTime CreatedDateTime
+        public bool Compare(UsbDevice device)
         {
-            get { return _createdDateTime; }
-            set { _createdDateTime = value; }
-        }
+            var deviceName = (device.DeviceName == "*") || DeviceName.ToLower() == device.DeviceName.ToLower();
+            var deviceType = (device.DeviceType == "*") || DeviceType.ToLower() == device.DeviceType.ToLower();
+            var description = (device.Description == "*") || Description.ToLower() == device.Description.ToLower();
+            var vendorId = (device.VendorId == "*") || VendorId.ToLower() == device.VendorId.ToLower();
+            var productId = (device.ProductId == "*") || ProductId.ToLower() == device.ProductId.ToLower();
+            var serialNumber = (device.SerialNumber == "*") || SerialNumber.ToLower() == device.SerialNumber.ToLower();
 
-        private DateTime _lastPlugDateTime = DateTime.MinValue;
-        public virtual DateTime LastPlugDateTime
-        {
-            get { return _lastPlugDateTime; }
-            set { _lastPlugDateTime = value; }
+            var result = deviceName && deviceType && description && 
+                vendorId && productId && serialNumber;
+
+            return result;
         }
     }
 }

@@ -11,6 +11,21 @@
     <AssemblyName>Core</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,10 +54,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NHibernate">
-      <HintPath>..\..\..\Libraries\NHibernate-3.3.5.GA-bin\Required_Bins\NHibernate.dll</HintPath>
+      <HintPath>..\..\..\Libraries\NHibernate\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\..\Libraries\NUnit-2.6.4\bin\framework\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\Libraries\NUnit\bin\net-3.5\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,6 +75,8 @@
     <Compile Include="Domain\Report.cs" />
     <Compile Include="Domain\UsbDevice.cs" />
     <Compile Include="Converter\UsbDeviewReport.cs" />
+    <Compile Include="Domain\UsbRecord.cs" />
+    <Compile Include="Import\UsbDeviewReportImport.cs" />
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepository.cs" />
@@ -67,15 +84,31 @@
     <Compile Include="Tests\ConnectionTest.cs" />
     <Compile Include="Tests\ExportSchemaTest.cs" />
     <Compile Include="Tests\UsbDeviewConverterTest.cs" />
+    <Compile Include="Tests\UsbDeviewImportTest.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Установщик Windows 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Mapper\DeviceAccount.hbm.xml" />
-    <EmbeddedResource Include="Mapper\DeviceAccount.xml" />
-    <EmbeddedResource Include="Mapper\UsbDevice.hbm.xml" />
+    <EmbeddedResource Include="Mapper\UsbRecord.hbm.xml" />
     <EmbeddedResource Include="Mapper\Report.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

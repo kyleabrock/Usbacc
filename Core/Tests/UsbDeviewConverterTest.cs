@@ -10,7 +10,7 @@ namespace UsbAcc.Core.Tests
         public void ConverterTest()
         {
             var converter = new UsbDeviewReport();
-            var result = converter.Convert("C:\\Distributive\\USBDeview\\WORKPC.xml");
+            var result = converter.Convert("c:\\Work\\Import\\106-FEO-03704.xml");
 
             Assert.Greater(result.Count, 0);
         }

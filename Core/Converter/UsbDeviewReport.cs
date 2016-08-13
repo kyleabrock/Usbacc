@@ -1,78 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Xml;
+using System.Linq;
+using System.Xml.Linq;
 using UsbAcc.Core.Domain;
 
 namespace UsbAcc.Core.Converter
 {
     public class UsbDeviewReport
     {
-        public IList<UsbDevice> Convert(string filePath)
+        public IList<UsbRecord> Convert(string filePath)
         {
             if (!File.Exists(filePath))
             {
                 //TODO: Throw exception
-                return new List<UsbDevice>();
+                return new List<UsbRecord>();
             }
             
-            var doc = new XmlDocument();
-            doc.Load(filePath);
+            var doc = XDocument.Parse(File.ReadAllText(filePath, System.Text.Encoding.GetEncoding("Windows-1251")));
+            var root = doc.Root;
+            if (root == null) return new List<UsbRecord>();
 
-            var rootNode = doc.DocumentElement;
-            if (rootNode == null)
-            {
-                //TODO: return Error
-                return new List<UsbDevice>();
-            }
-
-            var itemList = rootNode.SelectNodes("item");
-            if (itemList == null)
-                return new List<UsbDevice>();
-
-            var resultList = new List<UsbDevice>();
-            for (int i = 0; i < itemList.Count; i++)
-            {
-                var item = new UsbDevice();
-                var deviceNameNode = itemList[i].SelectSingleNode("./device_name");
-                item.DeviceName = deviceNameNode != null ? deviceNameNode.InnerText : "";
-
-                var descriptionNode = itemList[i].SelectSingleNode("./description");
-                item.Description = descriptionNode != null ? descriptionNode.InnerText : "";
-
-                var deviceTypeNode = itemList[i].SelectSingleNode("./device_type");
-                item.DeviceType = deviceTypeNode != null ? deviceTypeNode.InnerText : "";
-
-                var serialNumberNode = itemList[i].SelectSingleNode("./serial_number");
-                item.SerialNumber = serialNumberNode != null ? serialNumberNode.InnerText : "";
-
-                var vendorIdNode = itemList[i].SelectSingleNode("./vendorid");
-                item.VendorId = vendorIdNode != null ? vendorIdNode.InnerText : "";
-
-                var productIdNode = itemList[i].SelectSingleNode("./productid");
-                item.ProductId = productIdNode != null ? productIdNode.InnerText : "";
-
-                var createdDateTimeNode = itemList[i].SelectSingleNode("./created_date");
-                if (createdDateTimeNode != null)
-                {
-                    DateTime createdDate;
-                    if (DateTime.TryParse(createdDateTimeNode.InnerText, out createdDate))
-                        item.CreatedDateTime = createdDate;
-                }
-
-                var lastPlugDateTimeNode = itemList[i].SelectSingleNode("./last_plug_unplug_date");
-                if (lastPlugDateTimeNode != null)
-                {
-                    DateTime lastPlugDate;
-                    if (DateTime.TryParse(lastPlugDateTimeNode.InnerText, out lastPlugDate))
-                        item.LastPlugDateTime = lastPlugDate;
-                }
-
-                resultList.Add(item);
-            }
+            var itemList = root.Descendants(XName.Get("item"));
+            var resultList = itemList.Select(GetUsbDevice).ToList();
 
             return resultList;
+        }
+
+        private UsbRecord GetUsbDevice(XElement element)
+        {
+            var item = new UsbRecord();
+            var usbDevice = new UsbDevice
+                {
+                    DeviceName = (string) element.Element(XName.Get("device_name")) ?? string.Empty,
+                    Description = (string) element.Element(XName.Get("description")) ?? string.Empty,
+                    DeviceType = (string) element.Element(XName.Get("device_type")) ?? string.Empty,
+                    SerialNumber = (string) element.Element(XName.Get("serial_number")) ?? string.Empty,
+                    VendorId = (string) element.Element(XName.Get("vendorid")) ?? string.Empty,
+                    ProductId = (string) element.Element(XName.Get("productid")) ?? string.Empty
+                };
+
+            item.UsbDevice = usbDevice;
+
+            var createdDate = new DateTime();
+            var createdDateElement = (string) element.Element(XName.Get("created_date")) ?? string.Empty;
+            if (!string.IsNullOrEmpty(createdDateElement))
+                DateTime.TryParse(createdDateElement, out createdDate);
+
+            var lastPlug = new DateTime();
+            var lastPlugElement = (string)element.Element(XName.Get("last_plug_unplug_date")) ?? string.Empty;
+            if (!string.IsNullOrEmpty(lastPlugElement))
+                DateTime.TryParse(lastPlugElement, out lastPlug);
+
+            item.CreatedDateTime = createdDate;
+            item.LastPlugDateTime = lastPlug;
+            
+            return item;
         }
     }
 }

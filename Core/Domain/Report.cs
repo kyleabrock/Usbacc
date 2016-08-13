@@ -19,7 +19,7 @@ namespace UsbAcc.Core.Domain
             set { _creationDateTime = value; }
         }
 
-        public virtual IList<UsbDevice> UsbDevices { get; set; }
+        public virtual IList<UsbRecord> UsbRecords { get; set; }
 
         private string _comments = "";
         public virtual string Comments

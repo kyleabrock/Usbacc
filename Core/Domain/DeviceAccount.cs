@@ -2,53 +2,34 @@
 {
     public class DeviceAccount : EntityBase
     {
-        private string _deviceName = "";
-        public virtual string DeviceName
-        {
-            get { return _deviceName; }
-            set { _deviceName = value; }
-        }
-
-        private string _deviceType = "";
-        public virtual string DeviceType
-        {
-            get { return _deviceType; }
-            set { _deviceType = value; }
-        }
-
-        private string _description = "";
-        public virtual string Description
-        {
-            get { return _description; }
-            set { _description = value; }
-        }
-
-        private string _vendorId = "";
-        public virtual string VendorId
-        {
-            get { return _vendorId; }
-            set { _vendorId = value; }
-        }
-
-        private string _productId = "";
-        public virtual string ProductId
-        {
-            get { return _productId; }
-            set { _productId = value; }
-        }
-
-        private string _serialNumber = "";
-        public virtual string SerialNumber
-        {
-            get { return _serialNumber; }
-            set { _serialNumber = value; }
-        }
+        public virtual UsbDevice UsbDevice { get; set; }
 
         private string _user = "";
         public virtual string User
         {
             get { return _user; }
             set { _user = value; }
+        }
+
+        private string _department = "";
+        public virtual string Department
+        {
+            get { return _department; }
+            set { _department = value; }
+        }
+
+        private string _registrator = "";
+        public virtual string Registrator
+        {
+            get { return _registrator; }
+            set { _registrator = value; }
+        }
+
+        private string _regNumber = "";
+        public virtual string RegNumber
+        {
+            get { return _regNumber; }
+            set { _regNumber = value; }
         }
 
         private string _comments = "";

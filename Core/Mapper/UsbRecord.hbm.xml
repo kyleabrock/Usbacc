@@ -3,10 +3,11 @@
                    assembly="Core"
                    namespace="UsbAcc.Core.Domain">
 
-  <class name="DeviceAccount">
-    <id name="Id" column="DeviceAccountId">
+  <class name="UsbRecord">
+    <id name="Id" column="UsbRecordId">
       <generator class="increment"/>
     </id>
+    <many-to-one name="Report" class="Report" column="ReportId" />
     <component name="UsbDevice" class="UsbDevice">
       <property name="DeviceName" not-null="true"/>
       <property name="DeviceType" not-null="true"/>
@@ -15,11 +16,8 @@
       <property name="ProductId" not-null="true"/>
       <property name="SerialNumber" not-null="true"/>
     </component>
-    <property name="User" not-null="true"/>
-    <property name="Department" not-null="true"/>
-    <property name="Registrator" not-null="true"/>
-    <property name="RegNumber" not-null="true"/>
-    <property name="Comments" not-null="true"/>
+    <property name="CreatedDateTime" not-null="true"/>
+    <property name="LastPlugDateTime" not-null="true"/>
   </class>
 
 </hibernate-mapping>
