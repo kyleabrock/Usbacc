@@ -1,9 +1,9 @@
 ﻿using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
-using UsbAcc.Core.Domain;
+using Usbacc.Core.Domain;
 
-namespace UsbAcc.Core.Tests
+namespace Usbacc.Core.Tests
 {
     [TestFixture]
     class ExportSchemaTest

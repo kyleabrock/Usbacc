@@ -1,0 +1,13 @@
+﻿<Window x:Class="Usbacc.UI.View.UsbRecordInReportsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:viewModel="clr-namespace:Usbacc.UI.ViewModel"
+        Title="UsbRecordInReportsView" Height="300" Width="300"
+        WindowStartupLocation="CenterOwner">
+    <Window.DataContext>
+        <viewModel:UsbRecordInReportViewModel x:Name="ViewModel" />
+    </Window.DataContext>
+    
+    <Grid>
+        <ListBox ItemsSource="{Binding Path=ReportsList}" DisplayMemberPath="ReportName" />
+    </Grid>
+</Window>

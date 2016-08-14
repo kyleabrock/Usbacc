@@ -2,9 +2,9 @@
 using NHibernate;
 using NHibernate.Cfg;
 using NUnit.Framework;
-using UsbAcc.Core.Domain;
+using Usbacc.Core.Domain;
 
-namespace UsbAcc.Core.Tests
+namespace Usbacc.Core.Tests
 {
     [TestFixture]
     public class ConnectionTest

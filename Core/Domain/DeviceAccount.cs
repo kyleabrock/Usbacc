@@ -1,8 +1,9 @@
-﻿namespace UsbAcc.Core.Domain
+﻿namespace Usbacc.Core.Domain
 {
     public class DeviceAccount : EntityBase
     {
         public virtual UsbDevice UsbDevice { get; set; }
+        public virtual Status Status { get; set; }
 
         private string _user = "";
         public virtual string User
@@ -16,13 +17,6 @@
         {
             get { return _department; }
             set { _department = value; }
-        }
-
-        private string _registrator = "";
-        public virtual string Registrator
-        {
-            get { return _registrator; }
-            set { _registrator = value; }
         }
 
         private string _regNumber = "";

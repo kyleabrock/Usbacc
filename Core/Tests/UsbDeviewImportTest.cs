@@ -3,10 +3,10 @@ using System.Linq;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
-using UsbAcc.Core.Domain;
-using UsbAcc.Core.Import;
+using Usbacc.Core.Domain;
+using Usbacc.Core.Import;
 
-namespace UsbAcc.Core.Tests
+namespace Usbacc.Core.Tests
 {
     [TestFixture]
     public class UsbDeviewImportTest
@@ -25,7 +25,7 @@ namespace UsbAcc.Core.Tests
         public void UsbImportTest()
         {
             var files = Directory.GetFiles("c:\\Work\\Import\\").ToList();
-            var import = new UsbDeviewReportImport();
+            var import = new UsbRecordImport();
             import.Import(files);
         }
     }

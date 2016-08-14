@@ -2,9 +2,9 @@
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-using UsbAcc.Core.Domain;
+using Usbacc.Core.Domain;
 
-namespace UsbAcc.Core
+namespace Usbacc.Core
 {
     public static class NHibernateHelper
     {

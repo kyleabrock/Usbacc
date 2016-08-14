@@ -1,4 +1,4 @@
-﻿namespace UsbAcc.Core.Domain
+﻿namespace Usbacc.Core.Domain
 {
     public class UsbDevice
     {
@@ -44,7 +44,7 @@
             set { _serialNumber = value; }
         }
 
-        public bool Compare(UsbDevice device)
+        public virtual bool Compare(UsbDevice device)
         {
             var deviceName = (device.DeviceName == "*") || DeviceName.ToLower() == device.DeviceName.ToLower();
             var deviceType = (device.DeviceType == "*") || DeviceType.ToLower() == device.DeviceType.ToLower();

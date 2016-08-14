@@ -1,4 +1,4 @@
-﻿namespace UsbAcc.Core.Domain
+﻿namespace Usbacc.Core.Domain
 {
     public class EntityBase
     {

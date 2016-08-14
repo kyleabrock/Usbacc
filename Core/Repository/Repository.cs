@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using NHibernate;
-using UsbAcc.Core.Domain;
+using Usbacc.Core.Domain;
 
-namespace UsbAcc.Core.Repository
+namespace Usbacc.Core.Repository
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {

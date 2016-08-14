@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UsbAcc.Core.Domain
+namespace Usbacc.Core.Domain
 {
     public class Report : EntityBase
     {

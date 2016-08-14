@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using UsbAcc.Core.Converter;
+using Usbacc.Core.Converter;
 
-namespace UsbAcc.Core.Tests
+namespace Usbacc.Core.Tests
 {
     [TestFixture]
     public class UsbDeviewConverterTest
@@ -9,7 +9,7 @@ namespace UsbAcc.Core.Tests
         [Test]
         public void ConverterTest()
         {
-            var converter = new UsbDeviewReport();
+            var converter = new UsbDeviewConverter();
             var result = converter.Convert("c:\\Work\\Import\\106-FEO-03704.xml");
 
             Assert.Greater(result.Count, 0);

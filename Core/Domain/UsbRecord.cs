@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace UsbAcc.Core.Domain
+namespace Usbacc.Core.Domain
 {
     public class UsbRecord : EntityBase
     {
@@ -20,6 +21,40 @@ namespace UsbAcc.Core.Domain
         {
             get { return _lastPlugDateTime; }
             set { _lastPlugDateTime = value; }
+        }
+
+        private Status _status;
+        public virtual Status Status
+        {
+            get
+            {
+                if (_status != null)
+                    return _status;
+                
+                return Status.Untrusted;
+            }
+
+            set { _status = value; }
+        }
+
+        public virtual DeviceAccount Signature { get; set; }
+
+        public virtual void RefreshStatus(IEnumerable<DeviceAccount> deviceAccounts)
+        {
+            foreach (var deviceAccount in deviceAccounts)
+            {
+                if (UsbDevice.Compare(deviceAccount.UsbDevice))
+                {
+                    _status = deviceAccount.Status;
+                    Signature = deviceAccount;
+                }
+            }
+
+            if (_status == null)
+            {
+                _status = Status.Untrusted;
+                Signature = new DeviceAccount();
+            }
         }
     }
 }

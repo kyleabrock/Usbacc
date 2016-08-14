@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using UsbAcc.Core.Domain;
+using Usbacc.Core.Domain;
 
-namespace UsbAcc.Core.Repository
+namespace Usbacc.Core.Repository
 {
     public interface IRepository<T> where T : EntityBase
     {

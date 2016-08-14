@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="Core"
-                   namespace="UsbAcc.Core.Domain">
+                   namespace="Usbacc.Core.Domain">
 
   <class name="DeviceAccount">
     <id name="Id" column="DeviceAccountId">
@@ -15,9 +15,9 @@
       <property name="ProductId" not-null="true"/>
       <property name="SerialNumber" not-null="true"/>
     </component>
+    <many-to-one name="Status" class="Status" column="StatusId" />
     <property name="User" not-null="true"/>
     <property name="Department" not-null="true"/>
-    <property name="Registrator" not-null="true"/>
     <property name="RegNumber" not-null="true"/>
     <property name="Comments" not-null="true"/>
   </class>
