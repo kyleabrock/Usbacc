@@ -1,41 +1,95 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using UsbAcc.Core.Converter;
-using UsbAcc.Core.Domain;
-using UsbAcc.Core.Repository;
+using Usbacc.Core.Converter;
+using Usbacc.Core.Domain;
+using Usbacc.Core.Repository;
 
-namespace UsbAcc.Core.Import
+namespace Usbacc.Core.Import
 {
     public class UsbDeviewReportImport
     {
-        public void Import(string filePath)
+        public Report GetReport(string filePath)
         {
-            
+            var reportConverter = new UsbDeviewReportConverter();
+            var report = new Report
+            {
+                ReportName = Path.GetFileNameWithoutExtension(filePath),
+                CreationDateTime = File.GetLastWriteTime(filePath)
+            };
+
+            var usbDevices = reportConverter.Convert(filePath);
+            foreach (var usbDevice in usbDevices)
+                usbDevice.Report = report;
+
+            report.ReplaceUsbRecords(usbDevices);
+
+            return report;
         }
 
-        public void Import(IList<string> filesPath)
+        public Report GetReport(Report report, string filePath)
         {
-            var reportConverter = new UsbDeviewReport();
-            foreach (var filePath in filesPath)
+            var reportConverter = new UsbDeviewReportConverter();
+            var result = new Report
             {
-                var report = new Report
-                    {
-                        ReportName = Path.GetFileNameWithoutExtension(filePath),
-                        CreationDateTime = File.GetLastWriteTime(filePath)
-                    };
+                ReportName = report.ReportName,
+                CreationDateTime = report.CreationDateTime,
+                Comments = report.Comments
+            };
 
-                var usbDevices = reportConverter.Convert(filePath);
-                foreach (var usbDevice in usbDevices)
-                    usbDevice.Report = report;
+            var usbDevices = reportConverter.Convert(filePath);
+            report.ReplaceUsbRecords(usbDevices);
+            
+            return report;
+        }
 
-                report.UsbRecords = usbDevices;
 
-                var reportRepository = new Repository<Report>();
-                reportRepository.Save(report);
+        public void Import(Report report, string filePath)
+        {
+            if (!report.IsNew)
+                throw new Exception("Нельзя добавить данные в существующий отчет");
 
-                var usbDeviceRepository = new Repository<UsbRecord>();
-                usbDeviceRepository.Save(usbDevices);
-            }
+            var reportConverter = new UsbDeviewReportConverter();
+
+            var usbDevices = reportConverter.Convert(filePath);
+            foreach (var usbDevice in usbDevices)
+                usbDevice.Report = report;
+
+            report.ReplaceUsbRecords(usbDevices);
+
+            var usbDeviceRepository = new Repository<UsbRecord>();
+            usbDeviceRepository.Save(usbDevices);
+
+            var reportRepository = new Repository<Report>();
+            reportRepository.Save(report);
+        }
+
+        public void Import(string filePath)
+        {
+            var reportConverter = new UsbDeviewReportConverter();
+            var report = new Report
+            {
+                ReportName = Path.GetFileNameWithoutExtension(filePath),
+                CreationDateTime = File.GetLastWriteTime(filePath)
+            };
+
+            var usbDevices = reportConverter.Convert(filePath);
+            foreach (var usbDevice in usbDevices)
+                usbDevice.Report = report;
+
+            report.ReplaceUsbRecords(usbDevices);
+
+            var reportRepository = new Repository<Report>();
+            reportRepository.Save(report);
+
+            var usbDeviceRepository = new Repository<UsbRecord>();
+            usbDeviceRepository.Save(usbDevices);
+        }
+
+        public void Import(IEnumerable<string> filesPath)
+        {
+            foreach (var filePath in filesPath)
+                Import(filePath);
         }
     }
 }

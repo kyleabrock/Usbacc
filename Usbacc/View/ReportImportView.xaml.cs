@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using Usbacc.UI.ViewModel;
 
 namespace Usbacc.UI.View
 {
     /// <summary>
     /// Логика взаимодействия для ReportImportView.xaml
     /// </summary>
-    public partial class ReportImportView : Window
+    public partial class ReportImportView
     {
-        public ReportImportView()
+        public ReportImportView(string filePath)
         {
             InitializeComponent();
+
+            ViewModel = new ReportImportViewModel(filePath);
+            DataContext = ViewModel;
+
+            if (ViewModel.CloseAction == null)
+                ViewModel.CloseAction = Close;
         }
     }
 }

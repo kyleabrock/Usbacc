@@ -29,6 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -49,12 +50,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Themes\MainIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Blake.Controls">
+      <HintPath>..\..\..\Libraries\Blake.Controls\Blake.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.4.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libraries\NUnit\bin\net-3.5\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files\WPF Toolkit\v3.5.50211.1\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="WindowsBase" />
@@ -71,9 +84,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Utils\BoolToInvertConverter.cs" />
     <Compile Include="Utils\ColorToBrushConverter.cs" />
     <Compile Include="ViewModel\DeviceAccountAddViewModel.cs" />
+    <Compile Include="ViewModel\ReportEditViewModel.cs" />
     <Compile Include="ViewModel\ReportImportViewModel.cs" />
+    <Compile Include="ViewModel\SaveEntityBaseViewModel.cs" />
     <Compile Include="ViewModel\UsbRecordInReportViewModel.cs" />
     <Compile Include="ViewModel\UsbRecordTableViewModel.cs" />
     <Compile Include="Utils\BoolToVisibilityConverter.cs" />
@@ -90,8 +106,19 @@
     <Compile Include="ViewModel\Base\TableViewModel.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\ReportTableViewModel.cs" />
+    <Compile Include="ViewModel\SaveReportViewModel.cs" />
+    <Compile Include="ViewModel\DeviceAccountTableViewModel.cs" />
+    <Compile Include="ViewModel\StatusTableViewModel.cs" />
+    <Compile Include="ViewModel\StatusEditViewModel.cs" />
+    <Compile Include="ViewModel\UsbRecordFullTableViewModel.cs" />
     <Compile Include="View\DeviceAccountAddView.xaml.cs">
       <DependentUpon>DeviceAccountAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProgressView.xaml.cs">
+      <DependentUpon>ProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ReportEditView.xaml.cs">
+      <DependentUpon>ReportEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ReportImportView.xaml.cs">
       <DependentUpon>ReportImportView.xaml</DependentUpon>
@@ -99,100 +126,30 @@
     <Compile Include="View\ReportTableView.xaml.cs">
       <DependentUpon>ReportTableView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SaveEntityBaseView.xaml.cs">
+      <DependentUpon>SaveEntityBaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StatusEditView.xaml.cs">
+      <DependentUpon>StatusEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UsbRecordInReportsView.xaml.cs">
       <DependentUpon>UsbRecordInReportsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UsbRecordTableView.xaml.cs">
       <DependentUpon>UsbRecordTableView.xaml</DependentUpon>
     </Compile>
-    <Page Include="ControlsLibrary\Brushes.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ButtonDanger.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ButtonInfo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ButtonPrimary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ButtonSuccess.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ButtonWarning.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ComboBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ControlsWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\DataGrid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\DatePicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\MenuTabControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\PasswordBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\ProgressBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\RadialProgressBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\RichTextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\SwitchButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\TabControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\TabItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\TextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ControlsLibrary\UserTabItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="View\SaveReportView.xaml.cs">
+      <DependentUpon>SaveReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DeviceAccountTableView.xaml.cs">
+      <DependentUpon>DeviceAccountTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StatusTableView.xaml.cs">
+      <DependentUpon>StatusTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UsbRecordFullTableView.xaml.cs">
+      <DependentUpon>UsbRecordFullTableView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -201,17 +158,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ControlsLibrary\Arc.cs" />
-    <Compile Include="ControlsLibrary\ControlsWindow.xaml.cs">
-      <DependentUpon>ControlsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ControlsLibrary\ControlWindowViewModel.cs" />
-    <Compile Include="ControlsLibrary\ProgressToAngleConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\DeviceAccountAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ReportEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,6 +182,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\SaveEntityBaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StatusEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UsbRecordInReportsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -230,6 +197,22 @@
     <Page Include="View\UsbRecordTableView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SaveReportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DeviceAccountTableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StatusTableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UsbRecordFullTableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +233,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -280,37 +264,27 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Themes\Bin.png" />
-    <Resource Include="Themes\Bin16.png" />
-    <Resource Include="Themes\Card.png" />
-    <Resource Include="Themes\Document.png" />
-    <Resource Include="Themes\Edit.png" />
-    <Resource Include="Themes\Edit16.png" />
-    <Resource Include="Themes\Exit.png" />
-    <Resource Include="Themes\Filter.png" />
-    <Resource Include="Themes\Filter16.png" />
-    <Resource Include="Themes\Find.png" />
-    <Resource Include="Themes\Find16.png" />
-    <Resource Include="Themes\Find32.png" />
-    <Resource Include="Themes\MainIcon.ico" />
-    <Resource Include="Themes\MainIcon.png" />
-    <Resource Include="Themes\Move.png" />
-    <Resource Include="Themes\Move16.png" />
-    <Resource Include="Themes\MSWord.png" />
-    <Resource Include="Themes\Owner.png" />
-    <Resource Include="Themes\Refresh.png" />
-    <Resource Include="Themes\Refresh16.png" />
-    <Resource Include="Themes\Refresh24.png" />
-    <Resource Include="Themes\Repair.png" />
     <Resource Include="Themes\Report.png" />
     <Resource Include="Themes\Settings.png" />
-    <Resource Include="Themes\SplashScreen.png" />
-    <Resource Include="Themes\Staff.png" />
     <Resource Include="Themes\Status.png" />
-    <Resource Include="Themes\StockUnit.png" />
-    <Resource Include="Themes\Unit.png" />
-    <Resource Include="Themes\User.png" />
-    <Resource Include="Themes\UserAcc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\DeviceAccount.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Flash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\MainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\MainIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Themes\SplashScreen.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

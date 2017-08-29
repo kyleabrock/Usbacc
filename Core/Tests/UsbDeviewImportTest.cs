@@ -25,7 +25,7 @@ namespace Usbacc.Core.Tests
         public void UsbImportTest()
         {
             var files = Directory.GetFiles("c:\\Work\\Import\\").ToList();
-            var import = new UsbRecordImport();
+            var import = new UsbDeviewReportImport();
             import.Import(files);
         }
     }

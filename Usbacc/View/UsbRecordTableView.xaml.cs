@@ -18,6 +18,10 @@ namespace Usbacc.UI.View
                 ViewModel.AddDeviceAccountAction = AddDeviceAccount;
             if (ViewModel.FindDeviceAccountAction == null)
                 ViewModel.FindDeviceAccountAction = FindDeviceAccount;
+            if (ViewModel.ShowChanges == null)
+                ViewModel.ShowChanges = MainDataGrid.Items.Refresh;
+
+            Title = "Отчет: " + report.ReportName;
         }
 
         private void AddDeviceAccount()

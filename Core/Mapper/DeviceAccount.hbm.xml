@@ -5,7 +5,7 @@
 
   <class name="DeviceAccount">
     <id name="Id" column="DeviceAccountId">
-      <generator class="increment"/>
+      <generator class="identity"/>
     </id>
     <component name="UsbDevice" class="UsbDevice">
       <property name="DeviceName" not-null="true"/>

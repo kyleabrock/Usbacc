@@ -1,4 +1,6 @@
-﻿namespace Usbacc.Core.Domain
+﻿using System;
+
+namespace Usbacc.Core.Domain
 {
     public class EntityBase
     {

@@ -26,6 +26,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +54,8 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NHibernate">
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libraries\NHibernate\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
@@ -64,6 +66,7 @@
     <Reference Include="System.Data.SQLite">
       <HintPath>..\..\..\Libraries\System.Data.SQLite\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -76,12 +79,12 @@
     <Compile Include="Domain\Report.cs" />
     <Compile Include="Domain\Status.cs" />
     <Compile Include="Domain\UsbDevice.cs" />
-    <Compile Include="Converter\UsbDeviewConverter.cs" />
+    <Compile Include="Converter\UsbDeviewReportConverter.cs" />
     <Compile Include="Domain\UsbRecord.cs" />
     <Compile Include="Filter\CardFilter.cs" />
     <Compile Include="Filter\FilterBase.cs" />
     <Compile Include="Filter\IFilterBase.cs" />
-    <Compile Include="Import\UsbRecordImport.cs" />
+    <Compile Include="Import\UsbDeviewReportImport.cs" />
     <Compile Include="Import\DeviceAccountImport.cs" />
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,8 +92,11 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\StatusRepository.cs" />
+    <Compile Include="Repository\UsbRecordRepository.cs" />
     <Compile Include="Tests\ConnectionTest.cs" />
     <Compile Include="Tests\ExportSchemaTest.cs" />
+    <Compile Include="Tests\FirstInitTests.cs" />
     <Compile Include="Tests\ReportTests.cs" />
     <Compile Include="Tests\StatusTest.cs" />
     <Compile Include="Tests\UsbDeviewConverterTest.cs" />
@@ -115,9 +121,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hibernate.cfg.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Mapper\Status.hbm.xml" />
     <EmbeddedResource Include="Mapper\DeviceAccount.hbm.xml" />
     <EmbeddedResource Include="Mapper\UsbRecord.hbm.xml" />
@@ -126,7 +133,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)$(OutDir)NHibernate.dll" "$(SolutionDir)Usbacc\$(OutDir)" /Y /I
-xcopy "$(ProjectDir)$(OutDir)System.Data.SQLite.dll" "$(SolutionDir)Usbacc\$(OutDir)" /Y /I</PostBuildEvent>
+xcopy "$(ProjectDir)$(OutDir)System.Data.SQLite.dll" "$(SolutionDir)Usbacc\$(OutDir)" /Y /I
+xcopy "$(ProjectDir)$(OutDir)Iesi.Collections.dll" "$(SolutionDir)Usbacc\$(OutDir)" /Y /I</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

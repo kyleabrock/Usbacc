@@ -5,11 +5,15 @@
 
   <class name="Status">
     <id name="Id" column="StatusId">
-      <generator class="increment"/>
+      <generator class="identity"/>
     </id>
     <property name="StatusName" not-null="true"/>
     <property name="Color" not-null="true"/>
     <property name="Comments" not-null="true"/>
+    <bag name="DeviceAccounts" inverse="true" lazy="true">
+      <key column="StatusId" />
+      <one-to-many class="DeviceAccount" />
+    </bag>
   </class>
 
 </hibernate-mapping>

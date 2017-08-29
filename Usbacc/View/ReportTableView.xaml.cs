@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Usbacc.Core.Domain;
@@ -14,39 +13,54 @@ namespace Usbacc.UI.View
         public ReportTableView()
         {
             InitializeComponent();
-            SetActions();
+
+            if (ViewModel.ImportAction == null)
+                ViewModel.ImportAction = ImportAction;
+            if (ViewModel.GetFileNames == null)
+                ViewModel.GetFileNames = GetFileNames;
+            if (ViewModel.ShowInfoMessage == null)
+                ViewModel.ShowInfoMessage = s => MessageBox.Show(s);
+            if (ViewModel.SaveWithProgress == null)
+                ViewModel.SaveWithProgress = SaveWithProgress;
+            if (ViewModel.EditAction == null)
+                ViewModel.EditAction = EditAction;
+            if (ViewModel.DeleteAction == null)
+                ViewModel.DeleteAction = s => (MessageBox.Show(s, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK);
+            
+            RefreshButton.Command.Execute(null);
         }
 
-        public void Refresh()
+        private void EditAction(Report report)
         {
-            if (RefreshButton.Command.CanExecute(null))
-                RefreshButton.Command.Execute(null);
+            var dialog = new ReportEditView(report) {Owner = Window.GetWindow(this)};
+            dialog.Closed += (s, e) => dialog.Owner.Focus();
+            dialog.ShowDialog();
         }
 
-        private void SetActions()
+        private void SaveWithProgress(string[] files)
         {
-            //if (ViewModel.AddAction == null)
-            //    ViewModel.AddAction = DisplayAddDialog;
-            //if (ViewModel.EditAction == null)
-            //    ViewModel.EditAction = DisplayEditDialog;
+            var dialog = new SaveReportView(files) {Owner = Window.GetWindow(this)};
+            dialog.Closed += (s, e) => dialog.Owner.Focus();
+            dialog.ShowDialog();
         }
 
-        private void DisplayAddDialog()
+        private string[] GetFileNames()
         {
-            //var dialog = new CardAddView { Owner = Window.GetWindow(this) };
-            //dialog.Closed += (s, e) => dialog.Owner.Focus();
-            //dialog.Show();
+            var dlg = new Microsoft.Win32.OpenFileDialog
+                {
+                    Multiselect = true,
+                    Filter = "Файлы отчетов (*.xml)|*.xml|Все файлы (*.*)|*.*"
+                };
+            
+            var result = dlg.ShowDialog();
+            return result == true ? dlg.FileNames : new string[0];
         }
 
-        private void DisplayEditDialog()
+        private void ImportAction(string filePath)
         {
-            var item = ViewModel.SelectedItem as Report;
-            if (item != null)
-            {
-                var dialog = new UsbRecordTableView(item) { Owner = Window.GetWindow(this) };
-                dialog.Closed += (s, e) => dialog.Owner.Focus();
-                dialog.Show();
-            }
+            var dialog = new ReportImportView(filePath) {Owner = Window.GetWindow(this)};
+            dialog.Closed += (s, e) => dialog.Owner.Focus();
+            dialog.ShowDialog();
         }
 
         private void MainDataGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -56,17 +70,15 @@ namespace Usbacc.UI.View
             {
                 var datagrid = sender as DataGrid;
                 if (datagrid != null)
-                    DisplayEditDialog();
-            }
-        }
-
-        private void FilterButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (FilterGridColumn.Width.IsAbsolute && Math.Abs(FilterGridColumn.Width.Value) <= 0.0)
-                FilterGridColumn.Width = new GridLength(1, GridUnitType.Auto);
-            else
-            {
-                FilterGridColumn.Width = new GridLength(0, GridUnitType.Pixel);
+                {
+                    var item = ViewModel.SelectedItem as Report;
+                    if (item != null)
+                    {
+                        var dialog = new UsbRecordTableView(item) { Owner = Window.GetWindow(this) };
+                        dialog.Closed += (s, j) => dialog.Owner.Focus();
+                        dialog.Show();
+                    }
+                }
             }
         }
     }

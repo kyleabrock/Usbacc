@@ -31,6 +31,13 @@ namespace Usbacc.UI.ViewModel
             DeviceAccount.UsbDevice = usbDevice;
         }
 
+        public DeviceAccountAddViewModel(DeviceAccount account)
+        {
+            InitViewModel();
+            if (account != null)
+                DeviceAccount = account;
+        }
+
         public DeviceAccount DeviceAccount
         {
             get { return _deviceAccount; }

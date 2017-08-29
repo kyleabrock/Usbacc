@@ -23,21 +23,9 @@ namespace Usbacc.Core.Domain
             set { _lastPlugDateTime = value; }
         }
 
-        private Status _status;
-        public virtual Status Status
-        {
-            get
-            {
-                if (_status != null)
-                    return _status;
-                
-                return Status.Untrusted;
-            }
+        public virtual Status Status { get; protected set; }
 
-            set { _status = value; }
-        }
-
-        public virtual DeviceAccount Signature { get; set; }
+        public virtual DeviceAccount Signature { get; protected set; }
 
         public virtual void RefreshStatus(IEnumerable<DeviceAccount> deviceAccounts)
         {
@@ -45,14 +33,14 @@ namespace Usbacc.Core.Domain
             {
                 if (UsbDevice.Compare(deviceAccount.UsbDevice))
                 {
-                    _status = deviceAccount.Status;
+                    Status = deviceAccount.Status;
                     Signature = deviceAccount;
                 }
             }
 
-            if (_status == null)
+            if (Status == null)
             {
-                _status = Status.Untrusted;
+                Status = Status.Untrusted;
                 Signature = new DeviceAccount();
             }
         }

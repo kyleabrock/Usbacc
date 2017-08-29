@@ -5,11 +5,11 @@
 
   <class name="Report">
     <id name="Id" column="ReportId">
-      <generator class="increment"/>
+      <generator class="identity"/>
     </id>
     <property name="ReportName" not-null="true"/>
     <property name="CreationDateTime" not-null="true"/>
-    <bag name="UsbRecords" inverse="true">
+    <bag name="UsbRecords" inverse="true" lazy="true">
       <key column="ReportId" />
       <one-to-many class="UsbRecord" />
     </bag>

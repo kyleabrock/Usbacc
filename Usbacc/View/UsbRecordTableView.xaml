@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModel="clr-namespace:Usbacc.UI.ViewModel"
         xmlns:tk="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
-        Title="UsbRecordTableView" Height="480" Width="1024"
-        WindowStartupLocation="CenterOwner">
+        Title="Отчет" Height="480" Width="1024"
+        WindowStartupLocation="CenterOwner"
+        Icon="../Themes/MainIcon.png">
     <Window.DataContext>
         <viewModel:UsbRecordTableViewModel x:Name="ViewModel" />
     </Window.DataContext>
@@ -16,11 +17,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Height="32" VerticalAlignment="Center">
-            <Button Margin="4,0" Style="{StaticResource RefreshButtonNormalStyle}" x:Name="RefreshButton" Command="{Binding RefreshCommand}" />
+            <Button Margin="4,0" Style="{StaticResource RefreshButtonNormalStyle}" Command="{Binding RefreshCommand}" />
         </StackPanel>
 
         <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
-        <tk:DataGrid Style="{StaticResource DataGridDefaultStyle}"  IsReadOnly="True" Grid.Row="1"
+        <tk:DataGrid x:Name="MainDataGrid"  Style="{StaticResource DataGridDefaultStyle}"  IsReadOnly="True" Grid.Row="1"
                      ItemsSource="{Binding Path=TableItemListView}" SelectedItem="{Binding SelectedItem}" 
                      HorizontalScrollBarVisibility="Auto">
             <tk:DataGrid.Columns>
@@ -51,7 +52,6 @@
             <tk:DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Добавить в доверенные" Command="{Binding AddDeviceAccountCommand}" />
-                    <MenuItem Header="Удалить из доверенных" Command="{Binding RemoveDeviceAccountCommand}" />
                     <Separator />
                     <MenuItem Header="Найти в других отчетах" Command="{Binding FindDeviceAccountCommand}" />
                 </ContextMenu>

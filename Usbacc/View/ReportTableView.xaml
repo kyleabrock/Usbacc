@@ -20,10 +20,9 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="0" x:Name="FilterGridColumn"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Карточки" Grid.Row="0" Style="{StaticResource WindowTitleBlockStyle}" />
+        <TextBlock Text="Отчеты" Grid.Row="0" Style="{StaticResource WindowTitleBlockStyle}" />
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Height="32" VerticalAlignment="Bottom">
             <Button Margin="4,0" Style="{StaticResource ImportButtonNormalStyle}" Command="{Binding ImportCommand}" />

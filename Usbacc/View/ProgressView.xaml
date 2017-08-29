@@ -1,0 +1,16 @@
+﻿<Window x:Class="Usbacc.UI.View.ProgressView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Идет выполнение операции..." Height="80" Width="300"
+        WindowStyle="None" WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="8">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="{Binding Path=Message}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DialogTextBlockStyle}"/>
+            <ProgressBar Style="{StaticResource ProgressBarStyle}" VerticalAlignment="Center"
+                     Minimum="{Binding Path=Minimum}" Maximum="{Binding Path=Maximum}"
+                     Value="{Binding Path=Value}" Height="16"/>
+        </StackPanel>
+    </Grid>
+    
+</Window>

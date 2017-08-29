@@ -20,6 +20,7 @@ namespace Usbacc.UI.ViewModel
         }
 
         public ObservableCollection<Report> ReportsList { get; private set; }
+        public object SelectedItem { get; set; }
 
         private readonly UsbRecord _record;
     }

@@ -5,7 +5,7 @@
 
   <class name="UsbRecord">
     <id name="Id" column="UsbRecordId">
-      <generator class="increment"/>
+      <generator class="identity"/>
     </id>
     <many-to-one name="Report" class="Report" column="ReportId" />
     <component name="UsbDevice" class="UsbDevice">

@@ -1,8 +1,47 @@
 ﻿<Window x:Class="Usbacc.UI.View.ReportImportView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ReportImportView" Height="300" Width="300">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:viewModel="clr-namespace:Usbacc.UI.ViewModel"
+        xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        Title="Импорт отчета" Height="280" Width="480"
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow">
+    <Window.DataContext>
+        <viewModel:ReportImportViewModel x:Name="ViewModel" />
+    </Window.DataContext>
     <Grid>
-        <G
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.45*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="32" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Файл" Grid.Column="0" Grid.Row="0" Style="{StaticResource DialogTextBlockStyle}" />
+        <TextBlock Text="Название" Grid.Column="0" Grid.Row="1" Style="{StaticResource DialogTextBlockStyle}" />
+        <TextBlock Text="Дата" Grid.Column="0" Grid.Row="2" Style="{StaticResource DialogTextBlockStyle}" />
+        <TextBlock Text="Комментарии" Grid.Column="0" Grid.Row="3" Style="{StaticResource DialogTextBlockStyle}" />
+        <TextBlock Text="Имена из файла" Grid.Column="0" Grid.Row="5" Style="{StaticResource DialogTextBlockStyle}" />
+
+        <TextBox Text="{Binding Path=FilePath}" IsEnabled="False" Grid.Column="1" Grid.Row="0" Style="{StaticResource DialogTextBoxStyle}" />
+        <TextBox Text="{Binding Path=Report.ReportName}" IsEnabled="{Binding Path=GetPropertiesFromFile, Converter={StaticResource BoolToInvertConverter}}" Grid.Column="1" Grid.Row="1" Style="{StaticResource DialogTextBoxStyle}" />
+        <xceed:DateTimePicker Value="{Binding Path=Report.CreationDateTime}" Grid.Row="2" Grid.Column="1" 
+                             TimePickerVisibility="Collapsed" Format="ShortDate" 
+                             ShowButtonSpinner="False" IsEnabled="{Binding Path=GetPropertiesFromFile, Converter={StaticResource BoolToInvertConverter}}"
+                             Margin="4" Style="{StaticResource DateTimePickerStyle}" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Path=Report.Comments}" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Stretch" Style="{StaticResource DialogTextBoxStyle}" />
+
+        <CheckBox Content="Использовать метаданные файла" IsChecked="{Binding Path=GetPropertiesFromFile}" Grid.Column="1" Grid.Row="5" Style="{StaticResource SwitchButtonStyle}" HorizontalAlignment="Left" Margin="4" />
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40">
+            <Button Style="{StaticResource OkButtonNormalStyle}" Margin="4" Command="{Binding Path=SaveCommand}" />
+            <Button Style="{StaticResource CancelButtonNormalStyle}" Margin="4" Command="{Binding Path=CancelCommand}" />
+        </StackPanel>
     </Grid>
 </Window>

@@ -2,7 +2,13 @@
 {
     public class DeviceAccount : EntityBase
     {
-        public virtual UsbDevice UsbDevice { get; set; }
+        private UsbDevice _usbDevice = new UsbDevice();
+        public virtual UsbDevice UsbDevice
+        {
+            get { return _usbDevice; }
+            set { _usbDevice = value; }
+        }
+
         public virtual Status Status { get; set; }
 
         private string _user = "";

@@ -11,7 +11,7 @@ namespace Usbacc.UI.ViewModel.Base
             SearchCommand = new RelayCommand(x => FindMethod());
         }
 
-        private string _searchString;
+        private string _searchString = "";
         public virtual string SearchString
         {
             get { return _searchString; }

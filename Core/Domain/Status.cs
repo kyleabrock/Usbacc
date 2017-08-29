@@ -1,4 +1,6 @@
-﻿namespace Usbacc.Core.Domain
+﻿using System.Collections.Generic;
+
+namespace Usbacc.Core.Domain
 {
     public class Status : EntityBase
     {
@@ -22,6 +24,8 @@
             get { return _comments; }
             set { _comments = value; }
         }
+
+        public virtual IList<DeviceAccount> DeviceAccounts { get; set; }
 
         public static Status Untrusted
         {

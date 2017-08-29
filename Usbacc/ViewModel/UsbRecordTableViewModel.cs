@@ -24,8 +24,8 @@ namespace Usbacc.UI.ViewModel
         }
 
         public ICommand AddDeviceAccountCommand { get; set; }
-        public ICommand RemoveDeviceAccountCommand { get; set; }
         public ICommand FindDeviceAccountCommand { get; set; }
+        public Action ShowChanges { get; set; }
         public Action AddDeviceAccountAction { get; set; }
         public Action FindDeviceAccountAction { get; set; }
 
@@ -35,7 +35,6 @@ namespace Usbacc.UI.ViewModel
         private void InitViewModel()
         {
             AddDeviceAccountCommand = new RelayCommand(x => AddDeviceAccountMethod());
-            RemoveDeviceAccountCommand = new RelayCommand(x => RemoveDeviceAccountMethod());
             FindDeviceAccountCommand = new RelayCommand(x => FindDeviceAccountMethod());
 
             RefreshCommand = new AsyncCommand(x => RefreshMethod());
@@ -46,11 +45,7 @@ namespace Usbacc.UI.ViewModel
         private void AddDeviceAccountMethod()
         {
             AddDeviceAccountAction();
-        }
-
-        private void RemoveDeviceAccountMethod()
-        {
-            throw new NotImplementedException();
+            RefreshCommand.Execute(null);
         }
 
         private void FindDeviceAccountMethod()
@@ -61,9 +56,8 @@ namespace Usbacc.UI.ViewModel
         private void RefreshCommand_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             TableItemListView = CollectionViewSource.GetDefaultView(TableItemList);
-            OnPropertyChanged("TableItemListView");
-            OnPropertyChanged("SelectedItem");
             LoadTableSortOrder();
+            ShowChanges();
         }
 
         private void RefreshMethod()
@@ -75,7 +69,6 @@ namespace Usbacc.UI.ViewModel
                 usbRecord.RefreshStatus(deviceAccounts);
 
             TableItemList = _report.UsbRecords;
-            OnPropertyChanged("TableItemList");
         }
     }
 }

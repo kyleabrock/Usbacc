@@ -12,7 +12,20 @@ namespace Usbacc.Core.Repository
             using (ISession session = NHibernateHelper.OpenSession())
             {
                 var result = session.Get<Report>(id);
-                NHibernateUtil.Initialize(result.UsbRecords);
+                if (eagerLoading)
+                    NHibernateUtil.Initialize(result.UsbRecords);
+
+                return result;
+            }
+        }
+
+        public IList<Report> GetAll(bool eagerLoading)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                var query = session.QueryOver<Report>().Fetch(x => x.UsbRecords);
+                
+                var result = eagerLoading ? query.Eager.List() : query.Lazy.List();
 
                 return result;
             }

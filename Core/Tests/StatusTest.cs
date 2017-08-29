@@ -25,12 +25,12 @@ namespace Usbacc.Core.Tests
         {
             var statusList = new List<Status>
                 {
-                    new Status {StatusName = "Доверенные", Color = "#FFFFFF", Comments = "Секретариат"},
-                    new Status {StatusName = "Доверенные", Color = "#FFFFFF", Comments = "Отдел ИТ"},
-                    new Status {StatusName = "Доверенные", Color = "#FFFFFF", Comments = "Ш"},
-                    new Status {StatusName = "Уничтоженные", Color = "#FFFFFF", Comments = "Секретариат"},
-                    new Status {StatusName = "Уничтоженные", Color = "#FFFFFF", Comments = "Отдел ИТ"},
-                    new Status {StatusName = "Уничтоженные", Color = "#FFFFFF", Comments = "Ш"},
+                    new Status {StatusName = "Секретариат", Color = "#FFFFFF", Comments = "Секретариат"},
+                    new Status {StatusName = "Отдел ИТ", Color = "#FFFFFF", Comments = "Отдел ИТ"},
+                    new Status {StatusName = "Группа Ш", Color = "#FFFFFF", Comments = "Ш"},
+                    new Status {StatusName = "Секретариат (У)", Color = "#FFFFFF", Comments = "Секретариат"},
+                    new Status {StatusName = "Отдел ИТ (У)", Color = "#FFFFFF", Comments = "Отдел ИТ"},
+                    new Status {StatusName = "Группа Ш (У)", Color = "#FFFFFF", Comments = "Ш"},
                     Status.Untrusted
                 };
 
@@ -40,5 +40,7 @@ namespace Usbacc.Core.Tests
             var items = repository.GetAll();
             Assert.Greater(items.Count, 0);
         }
+
+
     }
 }

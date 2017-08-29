@@ -24,5 +24,15 @@ namespace Usbacc.UI.View
             if (ViewModel.CloseAction == null)
                 ViewModel.CloseAction = Close;
         }
+
+        public DeviceAccountAddView(DeviceAccount account)
+        {
+            InitializeComponent();
+            ViewModel = new DeviceAccountAddViewModel(account);
+            DataContext = ViewModel;
+
+            if (ViewModel.CloseAction == null)
+                ViewModel.CloseAction = Close;
+        }
     }
 }

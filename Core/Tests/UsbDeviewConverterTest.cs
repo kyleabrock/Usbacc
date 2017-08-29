@@ -9,7 +9,7 @@ namespace Usbacc.Core.Tests
         [Test]
         public void ConverterTest()
         {
-            var converter = new UsbDeviewConverter();
+            var converter = new UsbDeviewReportConverter();
             var result = converter.Convert("c:\\Work\\Import\\106-FEO-03704.xml");
 
             Assert.Greater(result.Count, 0);
